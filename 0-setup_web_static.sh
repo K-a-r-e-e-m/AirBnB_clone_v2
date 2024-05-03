@@ -17,7 +17,7 @@ echo "
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
-        add_header X-Served-By 438055-web-01;
+        add_header X-Served-By $HOSTNAME;
         error_page 404 /error_not_found.html;
         location = /error_not_found.html {
                 root /var/www/html;
@@ -32,10 +32,9 @@ server {
         }
 
         location /hbnb_static/  {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying a 404.
+                # Attempt to serve request as file
                 alias /data/web_static/current;
-                # try_files $uri $uri/ =404;
+                
         }
 }" > /etc/nginx/sites-enabled/default
 
