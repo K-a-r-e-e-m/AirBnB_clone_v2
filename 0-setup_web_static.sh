@@ -4,7 +4,7 @@
 nginx -v > /dev/null 2>&1
 if [ $? -eq 127 ]; then
     apt-get update
-    apt-get install nginx
+    apt-get install nginx -y
 fi
 
 mkdir -p /data/web_static/releases
