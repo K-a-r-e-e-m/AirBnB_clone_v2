@@ -7,8 +7,11 @@ if [ $? -eq 127 ]; then
     apt-get install nginx -y
 fi
 
+# Create 2 directories
 mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
+# Tests nginx on index file
 echo "This is test for nginx config" > /data/web_static/releases/test/index.html
+# Make symlink currect  /data/web_static/current
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 # Change owner for user and group R --> recursive , -h --> affect only on symbolic not ref
 chown -hR ubuntu:ubuntu /data/
@@ -36,7 +39,7 @@ server {
         location /hbnb_static/  {
             # Attempt to serve request as file
             alias /data/web_static/current;
-
+		    try_files \$uri \$uri/ =404;
         }
 }" > /etc/nginx/sites-enabled/default
 
