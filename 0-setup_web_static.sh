@@ -14,7 +14,7 @@ echo "This is test for nginx config" > /data/web_static/releases/test/index.html
 # Make symlink currect  /data/web_static/current
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 # Change owner for user and group R --> recursive , -h --> affect only on symbolic not ref
-chown -hR ubuntu:ubuntu /data/
+chown -hR ubuntu:ubuntu /data
 
 echo "
 server {
@@ -36,10 +36,9 @@ server {
             return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
         }
 
-        location /hbnb_static/  {
-            # Attempt to serve request as file
-            alias /data/web_static/current;
-		    try_files \$uri \$uri/ =404;
+        location /hbnb_static/ {
+            alias /data/web_static/current/;
+            try_files \$uri \$uri/ =404;
         }
 }" > /etc/nginx/sites-enabled/default
 
