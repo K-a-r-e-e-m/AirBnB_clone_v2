@@ -7,11 +7,11 @@ if [ $? -eq 127 ]; then
     apt-get install nginx -y
 fi
 
-mkdir -p /data/web_static/releases/test/
-mkdir -p /data/web_static/shared/
+mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
 echo "This is test for nginx config" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown -R ubuntu:ubuntu /data/
+# Change owner for user and group R --> recursive , -h --> affect only on symbolic not ref
+chown -hR ubuntu:ubuntu /data/
 
 echo "
 server {
