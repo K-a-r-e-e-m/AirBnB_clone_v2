@@ -13,7 +13,9 @@ echo "This is test for nginx config" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu data
 
-
-sed -i "s/server_name _;/\n\n\tlocation \/hbnb_static\/ {\n\t\talias /data/web_static/current;\n\t}"
+config_file="/etc/nginx/sites-enabled/default"
+searching="server_name _;"
+new_string="\n\n\tlocation \/hbnb_static\/ {\n\t\talias /data/web_static/current;\n\t}"
+sed -i "s/$searching/$new_string" $config_file
 
 service nginx restart
