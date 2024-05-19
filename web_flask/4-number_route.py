@@ -29,12 +29,12 @@ def pythoniscool(text="is_cool"):
     return f'Python {text.replace("_", " ")}'
 
 
-@app.route('/number/<int:n>', strict_slashes=False) # int: --> convert data type from str to int
+# int: --> convert data type from str to int
+@app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
     '''Starts a Flask web application with another route'''
     if isinstance(n, int):
         return f'{n} is a number'
-
 
 
 # web application must be listening on 0.0.0.0, port 5000
