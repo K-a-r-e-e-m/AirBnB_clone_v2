@@ -21,6 +21,7 @@ def cisfun(arg):
     '''Starts a Flask web application with another route'''
     return f'C {arg.replace("_", " ")}'
 
+
 @app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def pythoniscool(text="is_cool"):
