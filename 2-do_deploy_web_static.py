@@ -27,17 +27,18 @@ def do_deploy(archive_path):
 
     # Get the file name with the .tgz
     filename = archive_path.split('/')[1]
-    # Get the file name without .tgx
-    without_tgz = f'/data/web_static/releases/{filename.split('.')[0]}'
     # archive folder
     archive = f'/tmp/{filename}'
+    # Get the file name without .tgx
+    without_tgz = f'/data/web_static/releases/{filename.split(".")[0]}'
     try:
         put(archive_path, '/tmp/')
         sudo(f'mkdir -p {without_tgz}/')
-        sudo(f'tar -xzf {archive} {without_tgz}')
+        sudo(f'tar -xzf {archive} -C {without_tgz}')
         sudo(f'rm {archive}')
         sudo(f'mv {without_tgz}/web_static/* {without_tgz}')
         sudo(f'rm -rf {without_tgz}/web_static')
+        sudo(f'rm -rf /data/web_static/current')
         sudo(f'ln -s {without_tgz}/ /data/web_static/current')
         return True
     except Exception:
