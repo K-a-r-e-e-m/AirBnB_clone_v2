@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Use fabric function do_pack() to generage a tgz archive"""
 from fabric.api import local
 import time
