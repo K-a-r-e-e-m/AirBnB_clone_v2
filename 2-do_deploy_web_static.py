@@ -30,7 +30,7 @@ def do_deploy(archive_path):
         run(f'rm {archive}')
         run(f'mv {without_tgz}/web_static/* {without_tgz}')
         run(f'rm -rf {without_tgz}/web_static')
-        run(f'rm -rf /data/web_static/current')
+        # run(f'rm -rf /data/web_static/current')
         run(f'ln -s {without_tgz}/ /data/web_static/current')
         print('New version deployed!')
         return True
