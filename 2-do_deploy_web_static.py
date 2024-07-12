@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Use fabric function do_pack() to generage a tgz archive"""
 from fabric.api import *
-import time
 import os
 
 # My ip addresses of web server 1 and web server 2
@@ -21,13 +20,13 @@ def do_deploy(archive_path):
     without_tgz = f'/data/web_static/releases/{filename.split(".")[0]}'
     try:
         put(archive_path, '/tmp/')
-        sudo(f'mkdir -p {without_tgz}/')
-        sudo(f'tar -xzf {archive} -C {without_tgz}')
-        sudo(f'rm {archive}')
-        sudo(f'mv {without_tgz}/web_static/* {without_tgz}')
-        sudo(f'rm -rf {without_tgz}/web_static')
-        sudo(f'rm -rf /data/web_static/current')
-        sudo(f'ln -s {without_tgz}/ /data/web_static/current')
+        run(f'mkdir -p {without_tgz}/')
+        run(f'tar -xzf {archive} -C {without_tgz}')
+        run(f'rm {archive}')
+        run(f'mv {without_tgz}/web_static/* {without_tgz}')
+        run(f'rm -rf {without_tgz}/web_static')
+        run(f'rm -rf /data/web_static/current')
+        run(f'ln -s {without_tgz}/ /data/web_static/current')
         return True
     except Exception:
         return False
