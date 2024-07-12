@@ -25,13 +25,14 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
 
-    # Get the file name with the .tgz
-    filename = archive_path.split('/')[1]
-    # archive folder
-    archive = f'/tmp/{filename}'
-    # Get the file name without .tgx
-    without_tgz = f'/data/web_static/releases/{filename.split(".")[0]}'
     try:
+        # Get the file name with the .tgz
+        filename = archive_path.split('/')[1]
+        # archive folder
+        archive = f'/tmp/{filename}'
+        # Get the file name without .tgx
+        without_tgz = f'/data/web_static/releases/{filename.split(".")[0]}'
+
         put(archive_path, '/tmp/')
         sudo(f'mkdir -p {without_tgz}/')
         sudo(f'tar -xzf {archive} -C {without_tgz}')
