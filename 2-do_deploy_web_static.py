@@ -8,46 +8,21 @@ env.hosts = ['100.26.246.92', '54.237.124.240']
 
 
 def do_deploy(archive_path):
-    '''distributes an archive to my web servers'''
-    if not os.path.exists(archive_path):
+    """distributes an archive to the web servers"""
+    if exists(archive_path) is False:
         return False
-    
     try:
-        # archive_path = versions/web_static_20170315003959.tgz
-        
-        # filename_tgz = web_static_20170315003959.tgz
-        filename_tgz = archive_path.split('/')[-1]
-        
-        # archive = /tmp/web_static_20170315003959.tgz
-        archive = f'/tmp/{filename_tgz}'
-        
-        # filename = web_static_20170315003959
-        filename = filename_tgz.split(".")[0]
-        without_tgz = f'/data/web_static/releases/{filename}'
-        
-        # Upload the archive to the /tmp/ directory of the web server
+        file_n = archive_path.split("/")[-1]
+        no_ext = file_n.split(".")[0]
+        path = "/data/web_static/releases/"
         put(archive_path, '/tmp/')
-        
-        # Create the release directory
-        run(f'mkdir -p {without_tgz}/')
-        
-        # Uncompress the archive
-        run(f'tar -xzf {archive} -C {without_tgz}/')
-        
-        # Delete the archive from the web server
-        run(f'rm {archive}')
-        
-        # Move contents out of the web_static directory
-        run(f'mv {without_tgz}/web_static/* {without_tgz}')
-        run(f'rm -rf {without_tgz}/web_static')
-        
-        # Delete the symbolic link /data/web_static/current from the web server
-        run(f'rm -rf /data/web_static/current')
-        
-        # Create a new symbolic link /data/web_static/current on the web server
-        run(f'ln -s {without_tgz}/ /data/web_static/current')
-        
+        run('mkdir -p {}{}/'.format(path, no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
+        run('rm /tmp/{}'.format(file_n))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except Exception as e:
-        print(f"Error during deployment: {e}")
+    except:
         return False
