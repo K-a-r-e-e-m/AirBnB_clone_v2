@@ -13,7 +13,7 @@ def do_deploy(archive_path):
         return False
 
     # Get the file name with the .tgz
-    filename = archive_path.split('/')[1]
+    filename = archive_path.split('/')[-1]
     # archive folder
     archive = f'/tmp/{filename}'
     # Get the file name without .tgx
