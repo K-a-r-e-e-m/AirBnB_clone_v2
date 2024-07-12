@@ -1,1 +1,1 @@
-This directory implements webpage design.
+readme file for web stack task
